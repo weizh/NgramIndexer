@@ -30,6 +30,8 @@ public class RunnableIndexer implements Callable<Boolean> {
     String filename = files.poll();
     if (filename == null)
       return new Boolean(false);
+    if (filename.startsWith("googlebooks-eng-all-5gram-20120701") || filename.endsWith("_"))
+      return new Boolean(false);
     System.out.println("Thread running file " + filename);
     Document d = new Document();
     StringField[] ns = new StringField[5];
@@ -95,7 +97,8 @@ public class RunnableIndexer implements Callable<Boolean> {
         } else {
 
           // create a new document, and write it to the index with indexwriter.
-          if (toks[0].contains("_")==false)continue;
+          if (toks[0].contains("_") == false)
+            continue;
           String[] tok = toks[0].split(" ");
           for (i = 0; i < 5; i++) {
             if (tok[i].contains("_")) {
@@ -127,16 +130,14 @@ public class RunnableIndexer implements Callable<Boolean> {
       System.err.println("Can not read line!");
       ;
     }
-    if (br == null){
+    if (br == null) {
       System.out.println("Error opening file " + filename);
       return new Boolean(false);
-    }
-    else{
+    } else {
       System.out.println("Indexing finished: " + filename);
       return new Boolean(true);
     }
 
   }
-
 
 }
