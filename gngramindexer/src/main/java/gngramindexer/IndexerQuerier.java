@@ -54,7 +54,7 @@ public class IndexerQuerier {
 
     TopDocs res = null;
     try {
-      res = stringSearcher.search(query, 2500);
+      res = stringSearcher.search(query, Integer.MAX_VALUE);
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -75,9 +75,23 @@ public class IndexerQuerier {
   }
 
   public static void main(String argv[]) {
-    IndexerQuerier iq = new IndexerQuerier("index", "disk", 2400);
+    IndexerQuerier iq1 = new IndexerQuerier("index1", "disk", 2400);
+    IndexerQuerier iq2= new IndexerQuerier("index2", "disk", 2400);
+    IndexerQuerier iq3 = new IndexerQuerier("index3", "disk", 2400);
+    IndexerQuerier iq4 = new IndexerQuerier("index4", "disk", 2400);
+    IndexerQuerier iq5 = new IndexerQuerier("index5", "disk", 2400);
+    IndexerQuerier iqnum = new IndexerQuerier("index_num", "disk", 2400);
+    //"Azerbaijan", FIELD.n1, "declared", FIELD.n2
     try {
-      System.out.println(iq.getCountsByPhrase("Azerbaijan", FIELD.n1, "declared", FIELD.n2));
+      int n1 = iq1.getCountsByPhrase(argv);
+      int n2 = iq2.getCountsByPhrase(argv);
+      int n3 = iq3.getCountsByPhrase(argv);
+      int n4 = iq4.getCountsByPhrase(argv);
+      int n5 = iq5.getCountsByPhrase(argv);
+      int n_num = iqnum.getCountsByPhrase(argv);
+
+      System.out.println(n1+n2+n3+n4+n5+n_num);
+      
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

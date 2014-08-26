@@ -38,7 +38,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>gngramindexer.Indexer</mainClass>
+							<mainClass>gngramindexer.IndexerQuerier</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

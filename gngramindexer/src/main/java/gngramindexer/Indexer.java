@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -53,21 +54,17 @@ public class Indexer {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    boolean finish = true;
-    for (Future<Boolean> ff : f) {
-      try {
-        finish = finish && ff.get();
-      } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (ExecutionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+    es.shutdown();
+
+    boolean finshed=false;
+    try {
+      finshed = es.awaitTermination(1000000, TimeUnit.MINUTES);
+    } catch (InterruptedException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
     }
 
-    if (finish) {
-      es.shutdown();
+    if (finshed) {
       try {
         writer.close();
       } catch (IOException e) {
