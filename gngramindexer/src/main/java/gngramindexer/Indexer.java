@@ -30,6 +30,8 @@ public class Indexer {
   // argv[1] to notify where to store the files
   public static void main(String argv[]) {
 
+	  argv[0] = "src/main/resources/";
+	  argv[1] = "index";
     final File folder = new File(argv[0]);
 
     ConcurrentLinkedQueue<String> files = listFilesForFolder(folder);
@@ -112,6 +114,10 @@ public class Indexer {
 
   public static ConcurrentLinkedQueue<String> listFilesForFolder(final File folder) {
     ConcurrentLinkedQueue<String> files = new ConcurrentLinkedQueue<String>();
+    if (folder.listFiles()==null){
+    	files.add(folder.getAbsolutePath());
+    	return files;
+    }
     for (final File fileEntry : folder.listFiles()) {
       if (fileEntry.isDirectory()) {
         listFilesForFolder(fileEntry);
